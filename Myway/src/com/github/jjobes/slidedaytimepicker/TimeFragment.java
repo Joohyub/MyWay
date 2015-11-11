@@ -1,7 +1,5 @@
 package com.github.jjobes.slidedaytimepicker;
 
-import com.lg.sw26a2.myway.R;
-
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,6 +14,8 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TimePicker;
 
+import com.example.mywaytest3.R;
+
 /**
  * The fragment for the second page in the ViewPager that holds
  * the {@link CustomTimePicker}.
@@ -23,6 +23,7 @@ import android.widget.TimePicker;
  * @author jjobes
  *
  */
+
 public class TimeFragment extends Fragment
 {
     /**

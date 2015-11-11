@@ -1,5 +1,7 @@
 package com.github.jjobes.slidedaytimepicker;
 
+import com.example.mywaytest3.R;
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +13,6 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 
-import com.lg.sw26a2.myway.R;
 
 /**
  * The fragment for the first page in the ViewPager that holds

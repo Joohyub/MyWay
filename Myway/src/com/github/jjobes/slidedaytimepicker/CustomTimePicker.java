@@ -2,13 +2,14 @@ package com.github.jjobes.slidedaytimepicker;
 
 import java.lang.reflect.Field;
 
+import com.example.mywaytest3.R;
+
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import com.lg.sw26a2.myway.R;
 
 /**
  * A subclass of {@link android.widget.TimePicker} that uses

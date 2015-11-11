@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="주협"
-                android:textColor="#777" />
+                android:textColor="#666" />
         </LinearLayout>
 
         <RelativeLayout
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="빠름"
-                android:textColor="#777" />
+                android:textColor="#666" />
         </LinearLayout>
 
         <RelativeLayout
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="즐겨 찾는 장소를 등록하세요"
-                android:textColor="#777" />
+                android:textColor="#666" />
         </LinearLayout>
 
         <RelativeLayout
@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="보통"
-                android:textColor="#777" />
+                android:textColor="#666" />
         </LinearLayout>
 
         <RelativeLayout

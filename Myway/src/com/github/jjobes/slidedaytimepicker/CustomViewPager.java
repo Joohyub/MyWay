@@ -9,7 +9,8 @@ import android.view.ViewConfiguration;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 
-import com.lg.sw26a2.myway.R;
+import com.example.mywaytest3.R;
+
 
 /**
  * A custom {@link android.support.v4.view.ViewPager} implementation that corrects

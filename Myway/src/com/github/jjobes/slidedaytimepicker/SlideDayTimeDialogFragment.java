@@ -19,7 +19,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.lg.sw26a2.myway.R;
+import com.example.mywaytest3.R;
+
 
 /**
  * <p>The {@code DialogFragment} that contains the {@link SlidingTabLayout} and

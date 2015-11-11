@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="월요일"
-            android:textColor="#777" 
+            android:textColor="#666" 
             android:id="@+id/tvWeekDay"/>
     </LinearLayout>
 
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="09:30"
-            android:textColor="#777" 
+            android:textColor="#666" 
             android:id="@+id/tvWeekTime"/>
     </LinearLayout>
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="집"
-            android:textColor="#777" 
+            android:textColor="#666" 
             android:id="@+id/tvWeekFrom"/>
     </LinearLayout>
 
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="서울역"
-            android:textColor="#777" 
+            android:textColor="#666" 
             android:id="@+id/tvWeekTo"/>
     </LinearLayout>
 
@@ -147,7 +147,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="버스+지하철"
-            android:textColor="#777" 
+            android:textColor="#666" 
             android:id="@+id/tvWeekTransport"/>
     </LinearLayout>
 

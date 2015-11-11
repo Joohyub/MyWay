@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F5F5F5"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -12,11 +13,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="#FFF"
-        android:elevation="4dp"
-        android:paddingBottom="13dp"
-        android:paddingTop="13dp" 
         android:descendantFocusability="beforeDescendants"
-  android:focusableInTouchMode="true" >
+        android:elevation="4dp"
+        android:focusableInTouchMode="true"
+        android:paddingBottom="13dp"
+        android:paddingTop="13dp" >
 
         <ImageButton
             android:id="@+id/btnDrawer"
@@ -30,15 +31,14 @@
             android:text="Button" />
 
         <EditText
+            android:id="@+id/etSearchKey"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="45dp"
             android:layout_marginRight="50dp"
             android:background="@android:color/transparent"
-            android:hint="Enter search key" 
-            android:id="@+id/etSearchKey"
-            />
+            android:hint="Enter search key" />
 
         <ImageButton
             android:id="@+id/btnSearch"
@@ -52,46 +52,81 @@
             android:text="Button" />
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="30dp"
-        android:text="다가오는 일정"
-        android:textColor="#777"
-        android:textStyle="bold" />
-
-    <ListView
-        android:id="@+id/lvCommingEvent"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp" >
-    </ListView>
+        android:layout_height="match_parent" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp"
-        android:text="현재 위치"
-        android:textColor="#777"
-        android:textStyle="bold" />
-
-    <!-- 구글 뷰 자리! -->
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFF"
-        android:elevation="4dp" >
-
-        <ListView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:background="#384233" >
-        </ListView>
-    </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="다가오는 일정"
+                android:textColor="#777"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/lvCommingEvent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="4dp" >
+            </ListView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="30dp"
+                android:text="현재 위치"
+                android:textColor="#777"
+                android:textStyle="bold" />
+
+            <!-- 구글 뷰 자리! -->
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/transparent"
+                android:elevation="4dp" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFF"
+                    android:elevation="4dp"
+                    android:orientation="vertical" >
+
+                    <fragment
+                        android:id="@+id/map_view_current"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        class="com.google.android.gms.maps.SupportMapFragment" />
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" 
+                        android:elevation="4dp">
+
+                        <TextView
+                            android:id="@+id/itemtvTakingTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="10dp"
+                            android:text="경기도 평택시 진위면"
+                            android:textColor="#666" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
