@@ -26,8 +26,18 @@ import android.widget.ListView;
 public class MainActivity extends Activity {
 	public static DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
+	
 	public static ActionBarDrawerToggle mDrawerToggle;
 
+	
+	
+	
+
+	
+	
+	
+	
+	
 	// nav drawer title
 	private CharSequence mDrawerTitle;
 
@@ -65,17 +75,11 @@ public class MainActivity extends Activity {
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 
 		// adding nav drawer items to array
-		// Home
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-		// Find People
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-		// Photos
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-		// Communities, Will add a counter here
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1), true, "22"));
-		// Pages
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-		// What's hot, We  will add a counter here
 		
 
 		// Recycle the typed array
@@ -93,8 +97,7 @@ public class MainActivity extends Activity {
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setIcon(
 				   new ColorDrawable(getResources().getColor(android.R.color.transparent)));   
-		
-
+	
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
 				R.drawable.ic_drawer, //nav menu toggle icon
 				R.string.app_name, // nav drawer open - description for accessibility
@@ -107,7 +110,7 @@ public class MainActivity extends Activity {
 			}
 
 			public void onDrawerOpened(View drawerView) {
-				getActionBar().setTitle(mDrawerTitle);
+				//getActionBar().setTitle(mDrawerTitle);
 				// calling onPrepareOptionsMenu() to hide action bar icons
 				invalidateOptionsMenu();
 			}
