@@ -14,7 +14,7 @@ public class MyWayDBHelper extends SQLiteOpenHelper{
 	
 
 	public MyWayDBHelper(Context context) {
-		super(context, DB_NAME, null, 6);
+		super(context, DB_NAME, null, 8);
 	}
 	
 	@Override
@@ -28,64 +28,82 @@ public class MyWayDBHelper extends SQLiteOpenHelper{
 		db.execSQL("CREATE TABLE "+ DB_TABLE_WEEKLY + 
 				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _dayofweek INT, _time INT, _transport INT, _from INT, _fromName TEXT, _fromAdress TEXT, _fromX REAL, _fromY REAL, _to INT, _toName TEXT, _toAdress TEXT, _toX REAL, _toY REAL);");
 
+		
+		
+//		value.put("_name",name);
+//		value.put("_dayofweek", dayofweek);
+//		value.put("_time", time);
+//		value.put("_transport", transport);
+//		value.put("_from", from);
+//		value.put("_fromName", fromName);
+//		value.put("_fromAdress", fromAdress);
+//		value.put("_fromX", fromx);
+//		value.put("_fromY", fromy);
+//		value.put("_to", to);
+//		value.put("_toName", toName);
+//		value.put("_toAdress", toAdress);
+//		value.put("_toX", tox);
+//		value.put("_toY", toy);
+		
+		
 		/*TEST CODE*/
-		ContentValues cv = new ContentValues();
-		
-		cv.put("_walkvel", 0);
-		db.insert(DB_TABLE_PERSONAL,null,cv);
-		
-		cv.clear();
-		cv.put("_name","집");
-		cv.put("_address","서울시 동작구 흑석동");
-		cv.put("_outtime",7);
-		cv.put("_type",1);
-		db.insert(DB_TABLE_LOCATION, null, cv);
-		
-		cv.put("_name","회사");
-		cv.put("_address","서울시 금천구 디지털로 10길 56");
-		cv.put("_outtime",15);
-		cv.put("_type",1);
-		db.insert(DB_TABLE_LOCATION, null, cv);
-		
-		cv.put("_name","서울역");
-		cv.put("_address","서울특별시 용산구 한강대로 405 서울역");
-		cv.put("_outtime",0);
-		cv.put("_type",1);
-		db.insert(DB_TABLE_LOCATION, null, cv);
-		
-		ContentValues cv2 = new ContentValues();
-		cv2.put("_name","생일");
-		cv2.put("_date",20151125);
-		cv2.put("_time",1230);
-		cv2.put("_transport",1);
-		cv2.put("_from",1);
-		cv2.put("_to",2);
-		db.insert(DB_TABLE_APPOINTMENT, null, cv2);
-	
-		cv2.put("_name","빼빼로");
-		cv2.put("_date",20151111);
-		cv2.put("_time",1820);
-		cv2.put("_transport",2);
-		cv2.put("_from",2);
-		cv2.put("_to",1);
-		db.insert(DB_TABLE_APPOINTMENT, null, cv2);
-		
-		ContentValues cv3 = new ContentValues();
-		cv3.put("_name","출근");
-		cv3.put("_dayofweek",1);
-		cv3.put("_time",1205);
-		cv3.put("_transport",1);
-		cv3.put("_from",1);
-		cv3.put("_to",2);
-		db.insert(DB_TABLE_WEEKLY, null, cv3);
-		
-		cv3.put("_name","영어 학원");
-		cv3.put("_dayofweek",1);
-		cv3.put("_time",0702);
-		cv3.put("_transport",2);
-		cv3.put("_from",1);
-		cv3.put("_to",2);
-		db.insert(DB_TABLE_WEEKLY, null, cv3);
+//		ContentValues cv = new ContentValues();
+//		
+//		cv.put("_walkvel", 0);
+//		db.insert(DB_TABLE_PERSONAL,null,cv);
+//		
+//		cv.clear();
+//		cv.put("_name","집");
+//		cv.put("_address","서울시 동작구 흑석동");
+//		cv.put("_outtime",7);
+//		cv.put("_type",1);
+//		db.insert(DB_TABLE_LOCATION, null, cv);
+//		
+//		cv.put("_name","회사");
+//		cv.put("_address","서울시 금천구 디지털로 10길 56");
+//		cv.put("_outtime",15);
+//		cv.put("_type",1);
+//		db.insert(DB_TABLE_LOCATION, null, cv);
+//		
+//		cv.put("_name","서울역");
+//		cv.put("_address","서울특별시 용산구 한강대로 405 서울역");
+//		cv.put("_outtime",0);
+//		cv.put("_type",1);
+//		db.insert(DB_TABLE_LOCATION, null, cv);
+//		
+//		ContentValues cv2 = new ContentValues();
+//		cv2.put("_name","생일");
+//		cv2.put("_date",20151125);
+//		cv2.put("_time",1230);
+//		cv2.put("_transport",1);
+//		cv2.put("_from",1);
+//		cv2.put("_to",2);
+//		db.insert(DB_TABLE_APPOINTMENT, null, cv2);
+//	
+//		cv2.put("_name","빼빼로");
+//		cv2.put("_date",20151111);
+//		cv2.put("_time",1820);
+//		cv2.put("_transport",2);
+//		cv2.put("_from",2);
+//		cv2.put("_to",1);
+//		db.insert(DB_TABLE_APPOINTMENT, null, cv2);
+//		
+//		ContentValues cv3 = new ContentValues();
+//		cv3.put("_name","출근");
+//		cv3.put("_dayofweek",1);
+//		cv3.put("_time",1205);
+//		cv3.put("_transport",1);
+//		cv3.put("_from",1);
+//		cv3.put("_to",2);
+//		db.insert(DB_TABLE_WEEKLY, null, cv3);
+//		
+//		cv3.put("_name","영어 학원");
+//		cv3.put("_dayofweek",1);
+//		cv3.put("_time",0702);
+//		cv3.put("_transport",2);
+//		cv3.put("_from",1);
+//		cv3.put("_to",2);
+//		db.insert(DB_TABLE_WEEKLY, null, cv3);
 		/*TEST CODE END*/
 	}
 	@Override

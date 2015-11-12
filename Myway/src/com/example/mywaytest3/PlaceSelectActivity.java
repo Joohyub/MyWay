@@ -13,7 +13,10 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -32,6 +35,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mywaytest3.db.MyWayDBHelper;
+import com.example.mywaytest3.db.MyWayDBManager;
 import com.example.mywaytest3.googlemap.GeocodeJSONParser;
 import com.example.mywaytest3.model.LocationManager;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -48,7 +53,15 @@ public class PlaceSelectActivity extends FragmentActivity implements GoogleMap.O
 	private EditText etPlace;
 	private Button mButtonAdd;
 	private TextView tvType,tvAddress;
+	private MyWayDBManager DBMan;
 
+	
+	AlertDialog dlgFavoriteLocation;
+	AlertDialog.Builder builder;
+	AlertDialog levelDialog2;
+	AlertDialog.Builder builder2;
+
+	
 	//find lat and lon on click marker
 	LatLng markerLocation;
 	
@@ -64,6 +77,8 @@ public class PlaceSelectActivity extends FragmentActivity implements GoogleMap.O
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_placeselect);
+		
+		DBMan = MyWayDBManager.getInstance(this);
 		
 		bDayorWeek = getIntent().getExtras().getInt("bDayorWeek", 0);
 		bType = getIntent().getExtras().getInt("bType", 0);		
@@ -84,7 +99,6 @@ public class PlaceSelectActivity extends FragmentActivity implements GoogleMap.O
 		btnFind = (ImageButton) findViewById(R.id.btnSearch);
 		btnFavoriteList = (ImageButton) findViewById(R.id.btnFavoriteList);
 		btnRealTime = (ImageButton) findViewById(R.id.btnRealTime);
-		//mButtonAdd = (Button) findViewById(R.id.btn_add); // 검색버튼
 		etPlace = (EditText) findViewById(R.id.etTextQuery);
 		tvType = (TextView) findViewById(R.id.placetvType);
 		tvAddress = (TextView) findViewById(R.id.placetvAddress);
@@ -93,8 +107,6 @@ public class PlaceSelectActivity extends FragmentActivity implements GoogleMap.O
 			tvType.setText("출발지");
 		else
 			tvType.setText("도착지");
-		
-		
 		
 		tvAddress.setText("");
 		
@@ -148,28 +160,32 @@ public class PlaceSelectActivity extends FragmentActivity implements GoogleMap.O
 				Search();
 			}
 		});
-//
-//		mButtonAdd.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				if(etPlace.getText().toString()==null || etPlace.getText().toString().equals("")){
-//					Toast.makeText(getBaseContext(), "장소를 입력하세요", Toast.LENGTH_SHORT).show();
-//					return;
-//				}
-//
-//				if(lat == 0 && lng == 0 && newAddress == null){
-//					Toast.makeText(getBaseContext(), "검색 버튼을 터치해 주세요", Toast.LENGTH_SHORT).show();
-//					return;
-//				}
-//
-//				if(markerLocation == null){
-//					Toast.makeText(PlaceSelectActivity.this, "좌표 :" + lng + ", " + lat +"\n주소 : " + newAddress, Toast.LENGTH_SHORT).show();
-//					return;
-//				}
-//				//마커가 여러개 일때 마커를 선택한 경우
-//				Toast.makeText(PlaceSelectActivity.this, "좌표 :" + markerLocation.longitude + ", " + markerLocation.latitude+"\n주소 : " + newAddress, Toast.LENGTH_SHORT).show();
-//			}
-//		});
+		
+
+		
+		Cursor lc = DBMan.searchLocation();
+		builder = new AlertDialog.Builder(this);
+		builder.setTitle("장소목록");
+		builder.setSingleChoiceItems(lc, -1, "_name", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				LocationManager.getInstance().locComm[bDayorWeek][bType].setId( LocationManager.getInstance().getList().get(item).getId() );
+				dlgFavoriteLocation.dismiss();    
+				onBackPressed();
+			}
+		});
+		
+		btnFavoriteList.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dlgFavoriteLocation = builder.create();
+				dlgFavoriteLocation.show();
+			}
+		});
+
+		
+		
+
 	}
 	
 	public void Search()

@@ -7,8 +7,81 @@ public class WeeklyItem {
 	private int time;
 	private int transport;
 	private int from;
-	private int to;
+	private String fromName;
+	private String fromAddress;
+	private float fromX;
+	private float fromY;
 	
+	private int to;
+	private String toName;
+	private String toAddress;
+	private float toX;
+	private float toY;	
+	
+	public String getFromName() {
+		return fromName;
+	}
+
+	public void setFromName(String fromName) {
+		this.fromName = fromName;
+	}
+
+	public String getFromAddress() {
+		return fromAddress;
+	}
+
+	public void setFromAddress(String fromAddress) {
+		this.fromAddress = fromAddress;
+	}
+
+	public float getFromX() {
+		return fromX;
+	}
+
+	public void setFromX(float fromX) {
+		this.fromX = fromX;
+	}
+
+	public float getFromY() {
+		return fromY;
+	}
+
+	public void setFromY(float fromY) {
+		this.fromY = fromY;
+	}
+
+	public String getToName() {
+		return toName;
+	}
+
+	public void setToName(String toName) {
+		this.toName = toName;
+	}
+
+	public String getToAddress() {
+		return toAddress;
+	}
+
+	public void setToAddress(String toAddress) {
+		this.toAddress = toAddress;
+	}
+
+	public float getToX() {
+		return toX;
+	}
+
+	public void setToX(float toX) {
+		this.toX = toX;
+	}
+
+	public float getToY() {
+		return toY;
+	}
+
+	public void setToY(float toY) {
+		this.toY = toY;
+	}
+
 	public int getId() {
 		return id;
 	}

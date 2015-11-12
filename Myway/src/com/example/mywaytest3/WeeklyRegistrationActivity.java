@@ -1,10 +1,14 @@
 package com.example.mywaytest3;
 
+import com.example.mywaytest3.model.LocationItem;
 import com.example.mywaytest3.model.LocationManager;
+import com.example.mywaytest3.model.WeeklyManager;
 import com.github.jjobes.slidedaytimepicker.SlideDayTimeListener;
 import com.github.jjobes.slidedaytimepicker.SlideDayTimePicker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -14,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +31,15 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 	
 	TextView tvWeekDay, tvWeekTime, tvWeekFrom, tvWeekTo, tvWeekTransport;
 	
+	EditText etName;
+	
 	public static int day, hour, minute = 0; 
+	final CharSequence[] itemsTrans = {" 대중교통"," 자동차"," 도보"};
+	int trans=0;
+	
+	AlertDialog dlgTrans;
+	AlertDialog.Builder builder2;
+
 	
 	public String sDay[] = new String[]{"월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"};
 	
@@ -57,6 +70,8 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 		layoutWeekFrom = (LinearLayout) findViewById(R.id.layoutWeekFrom);
 		layoutWeekTo = (LinearLayout) findViewById(R.id.layoutWeekTo);
 		layoutWeekTransport = (LinearLayout) findViewById(R.id.layoutWeekTransport);
+		
+		etName = (EditText) findViewById(R.id.etName);
 		
 		
     	tvWeekDay.setText(sDay[day]);
@@ -139,11 +154,51 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 			}
 		});
         
+        tvWeekTransport.setText(itemsTrans[trans]);
+        
+
+		// Creating and Building the Dialog 
+		builder2 = new AlertDialog.Builder(this);
+		builder2.setTitle("교통수단 설정");
+		builder2.setSingleChoiceItems(itemsTrans, -1, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int item) {
+				trans = item;
+				tvWeekTransport.setText(itemsTrans[trans]);
+				dlgTrans.dismiss();    
+			}
+		});
+		
+		layoutWeekTransport.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dlgTrans = builder2.create();
+				dlgTrans.show();
+			}
+		});
+
+
+        
 	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem)
 	{       
+		if(menuItem.getItemId() == R.id.itemSave)
+		{
+			LocationItem l0 = LocationManager.locComm[1][0];
+			LocationItem l1 = LocationManager.locComm[1][1];
+			
+			if(l0.getId() == -2)
+				WeeklyManager.getInstance().addItem(etName.getText().toString(),day,hour*100 +minute, trans
+						,-1,"", "", 0f, 0f
+						,l1.getId(),l1.getName(), l1.getAddress(), l1.getX(), l1.getY());
+			else
+			WeeklyManager.getInstance().addItem(etName.getText().toString(),day,hour*100 +minute, trans
+					,l0.getId(),l0.getName(), l0.getAddress(), l0.getX(), l0.getY()
+					,l1.getId(),l1.getName(), l1.getAddress(), l1.getX(), l1.getY());
+			Toast.makeText(WeeklyRegistrationActivity.this, "저장되었습니다", Toast.LENGTH_SHORT).show();
+		}
+		
 	    onBackPressed();
 	    return true;
 	}
@@ -164,14 +219,23 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 		else if(LocationManager.locComm[1][0].getId() == -1)
 			tvWeekFrom.setText(LocationManager.locComm[1][0].getAddress());
 		else
-			tvWeekFrom.setText(LocationManager.getInstance().getLocationAddress(LocationManager.locComm[1][0].getId()));
+		{
+			LocationItem l = LocationManager.getInstance().getLocationItem(LocationManager.locComm[1][0].getId());
+			tvWeekFrom.setText(l.getAddress());
+			LocationManager.locComm[1][0] = l;
+		}
 			
 		if(LocationManager.locComm[1][1].getId() == -3)
 			tvWeekTo.setText("");
 		else if(LocationManager.locComm[1][1].getId() == -1)
 			tvWeekTo.setText(LocationManager.locComm[1][1].getAddress());
 		else
-			tvWeekTo.setText(LocationManager.getInstance().getLocationAddress(LocationManager.locComm[1][0].getId()));
+		{
+			LocationItem l = LocationManager.getInstance().getLocationItem(LocationManager.locComm[1][1].getId());
+			tvWeekTo.setText(l.getAddress());
+			LocationManager.locComm[1][1] = l;
+			
+		}
 	}
 	
 	

@@ -6,6 +6,7 @@ import com.example.mywaytest3.db.MyWayDBManager;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.DropBoxManager;
 import android.util.Log;
 
 
@@ -17,8 +18,9 @@ public class LocationManager {
 		public static LocationItem locCurrent = new LocationItem();
 		public static LocationItem locComm[][] = new LocationItem[2][]; //Place Select Activity와 통신용도
 		
+		int seq = 0;
 		
-		
+		static MyWayDBManager DBman;
 		
 		private LocationManager() {
 			super();
@@ -28,7 +30,6 @@ public class LocationManager {
 		}
 		
 		public static void init(Context context){
-			MyWayDBManager DBman;
 			DBman = MyWayDBManager.getInstance(context);
 			Cursor c = DBman.searchLocation();
 			while(c.moveToNext()){
@@ -54,6 +55,11 @@ public class LocationManager {
 
 		}
 		
+		public ArrayList<LocationItem> getList()
+		{
+			return llist;
+		}
+		
 		public void addItem(int id, String name, String address, float x, float y, int outtime, int type){
 			LocationItem item = null;
 			item = new LocationItem();
@@ -65,6 +71,25 @@ public class LocationManager {
 			item.setOuttime(outtime);
 			item.setType(type);
 			llist.add(item);
+			if(id > seq)
+				seq=id;
+		}
+		
+		public void addItemWithoutID(String name, String address, float x, float y, int outtime, int type){
+			LocationItem item = null;
+			item = new LocationItem();
+			seq++;
+			item.setId(seq);
+			item.setName(name);
+			item.setAddress(address);
+			item.setX(x);
+			item.setY(y);
+			item.setOuttime(outtime);
+			item.setType(type);
+			llist.add(item);
+			
+			DBman.insertLocation(name, address, x, y, outtime, type);
+			
 		}
 		
 		public void updateItem(int id, String name, String address, float x, float y, int outtime, int type){
@@ -85,6 +110,8 @@ public class LocationManager {
 			for(LocationItem l : llist){
 				if(l.getId() == id){
 					llist.remove(l);
+					DBman.deleteLocation(id);
+					return;
 				}
 			}
 		}
@@ -148,6 +175,16 @@ public class LocationManager {
 			for(LocationItem litem : llist){
 				if(litem.getId() == id){
 					return litem.getName(); 
+				}
+			}
+			return null;
+		}
+		
+		public LocationItem getLocationItem(int id)
+		{
+			for(LocationItem litem : llist){
+				if(litem.getId() == id){
+					return litem;
 				}
 			}
 			return null;

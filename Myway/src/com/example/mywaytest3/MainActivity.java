@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -21,11 +22,14 @@ import android.widget.ListView;
 
 import com.example.mywaytest3.adapter.NavDrawerListAdapter;
 import com.example.mywaytest3.model.AppointmentManager;
+import com.example.mywaytest3.model.CalendarController.EventHandler;
+import com.example.mywaytest3.model.CalendarController.EventInfo;
+import com.example.mywaytest3.model.CalendarController.EventType;
 import com.example.mywaytest3.model.LocationManager;
 import com.example.mywaytest3.model.NavDrawerItem;
 import com.example.mywaytest3.model.WeeklyManager;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements EventHandler{
 	public static DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 
@@ -50,12 +54,15 @@ public class MainActivity extends FragmentActivity {
 	private AppointmentManager appointmentManager = AppointmentManager.getInstance();
 	private WeeklyManager weeklyManager = WeeklyManager.getInstance();
 	private LocationManager locationManager = LocationManager.getInstance();
-
+	private EventInfo event;
+	private boolean dayView;
+	boolean eventView;
 
 
 
 
 	public static Fragment fragments[] = new Fragment[5];
+	public static Fragment fragmentDay;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -255,6 +262,48 @@ public class MainActivity extends FragmentActivity {
 		super.onConfigurationChanged(newConfig);
 		// Pass any configuration change to the drawer toggls
 		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	
+	
+	@Override
+	public long getSupportedEventTypes() {
+		return EventType.GO_TO | EventType.VIEW_EVENT | EventType.UPDATE_TITLE;
+	}
+
+	@Override
+	public void handleEvent(EventInfo event) {
+		if (event.eventType == EventType.GO_TO) {
+			this.event = event;
+			dayView = true;
+				FragmentTransaction ft = getFragmentManager().beginTransaction();
+				fragmentDay = new DayFragment(event.startTime.toMillis(true),1);
+				ft.replace(R.id.cal_frame, fragmentDay).addToBackStack(null).commit();
+		}if(event.eventType == EventType.VIEW_EVENT){
+			//TODO do something when an event is clicked
+					dayView = false;
+					eventView = true;
+					this.event = event;
+//					FragmentTransaction ft = getFragmentManager().beginTransaction();
+//					edit = new EditEvent(event.id);
+//					ft.replace(R.id.cal_frame, edit).addToBackStack(null).commit();
+
+			
+		}
+		
+	}
+
+	@Override
+	public void eventsChanged() {
+	
+	}
+	
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		
 	}
 
 }

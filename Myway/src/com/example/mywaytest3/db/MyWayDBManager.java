@@ -61,7 +61,7 @@ public class MyWayDBManager {
 		db.insert(MyWayDBHelper.DB_TABLE_APPOINTMENT, null, value);
 	}
 	
-	public void insertLocation(String name, String address, int x, int y, int outtime, int type)
+	public void insertLocation(String name, String address, float x, float y, int outtime, int type)
 	{
 		ContentValues value = new ContentValues();
 		value.put("_name", name);
@@ -77,7 +77,7 @@ public class MyWayDBManager {
 	{
 		ContentValues row = new ContentValues();
 		row.put("_walkvel",walkvel);
-		db.update(MyWayDBHelper.DB_TABLE_PERSONAL, row, "_id = ?", new String[]{"_id"});
+		db.update(MyWayDBHelper.DB_TABLE_PERSONAL, row, "_id = ?", new String[]{_id+""});
 	}	
 	
 	
@@ -89,7 +89,7 @@ public class MyWayDBManager {
 		row.put("_transport", transport);
 		row.put("_from", from);
 		row.put("_to", to);
-		db.update(MyWayDBHelper.DB_TABLE_WEEKLY, row, "_id = ?", new String[]{"_id"});
+		db.update(MyWayDBHelper.DB_TABLE_WEEKLY, row, "_id = ?", new String[]{_id+""});
 	}
 	
 	public void updateAppointment(int _id, int date, int time, int transport,  int from, int to)
@@ -100,10 +100,10 @@ public class MyWayDBManager {
 		row.put("_transport", transport);
 		row.put("_from", from);
 		row.put("_to", to);
-		db.update(MyWayDBHelper.DB_TABLE_WEEKLY, row, "_id = ?", new String[]{"_id"});
+		db.update(MyWayDBHelper.DB_TABLE_WEEKLY, row, "_id = ?", new String[]{_id+""});
 	}	
 	
-	public void updateLocation(int _id, String name, String address, int x, int y, int outtime, int type)
+	public void updateLocation(int _id, String name, String address, float x, float y, int outtime, int type)
 	{
 		ContentValues row = new ContentValues();
 		row.put("_name", name);
@@ -112,27 +112,27 @@ public class MyWayDBManager {
 		row.put("_y", y);
 		row.put("_outtime", outtime);
 		row.put("_type", type);
-		db.update(MyWayDBHelper.DB_TABLE_LOCATION, row, "_id = ?", new String[]{"_id"});
+		db.update(MyWayDBHelper.DB_TABLE_LOCATION, row, "_id = ?", new String[]{_id+""});
 	}
 	
 	public void deleteWeekSchdule(int _id)
 	{
-		db.delete(MyWayDBHelper.DB_TABLE_WEEKLY, "_id = ?", new String[]{"_id"});
+		db.delete(MyWayDBHelper.DB_TABLE_WEEKLY, "_id = ?", new String[]{_id+""});
 	}
 	
 	public void deleteLocation(int _id)
 	{
-		db.delete(MyWayDBHelper.DB_TABLE_LOCATION, "_id = ?", new String[]{"_id"});
+		db.delete(MyWayDBHelper.DB_TABLE_LOCATION, "_id = ?", new String[]{_id+""});
 	}		
 	
 	public Cursor searchWeekSchedule()
 	{
-		Cursor c = db.query(MyWayDBHelper.DB_TABLE_WEEKLY,new String[]{"_id","_name","_dayofweek","_time","_transport","_from","_to"},null,null,null,null,null);
+		Cursor c = db.query(MyWayDBHelper.DB_TABLE_WEEKLY,new String[]{"_id","_name","_dayofweek","_time","_transport","_from","_fromName", "_fromAdress", "_fromX", "_fromY", "_to", "_toName", "_toAdress", "_toX", "_toY"},null,null,null,null,null);
 		return c;
 	}
 	public Cursor searchAppointment()
 	{
-		Cursor c = db.query(MyWayDBHelper.DB_TABLE_APPOINTMENT,new String[]{"_id","_name","_date","_time","_transport","_from","_to"},null,null,null,null,null);
+		Cursor c = db.query(MyWayDBHelper.DB_TABLE_APPOINTMENT,new String[]{"_id","_name","_date","_time","_transport","_from","_fromName", "_fromAdress", "_fromX", "_fromY", "_to", "_toName", "_toAdress", "_toX", "_toY"},null,null,null,null,null);
 		return c;
 	}
 	public Cursor searchLocation()

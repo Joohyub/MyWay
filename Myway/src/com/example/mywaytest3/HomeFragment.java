@@ -148,5 +148,17 @@ public class HomeFragment extends Fragment {
 	        listView.requestLayout();
 	    }
 
+	 @Override
+	public void onResume() {
+		super.onResume();
+		appointmentManager.sort();
+		
+		list = appointmentManager.getList();
+		
+		appointmentListAdapter = new AppointmentListAdapter(getActivity(), list);
+		lv.setAdapter(appointmentListAdapter);
+		appointmentListAdapter.notifyDataSetChanged();
+		setListViewHeightBasedOnChildren(lv);
+	}
 	
 }

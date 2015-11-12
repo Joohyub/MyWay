@@ -14,7 +14,7 @@ import android.util.Log;
 public class WeeklyManager {
 	private static WeeklyManager instance = new WeeklyManager();
 	private ArrayList<WeeklyItem> wlist = new ArrayList<WeeklyItem>();	
-	
+	static MyWayDBManager DBman;
 	private WeeklyManager() {
 		super();
 	}
@@ -27,9 +27,11 @@ public class WeeklyManager {
 		Collections.sort(wlist, comp);
 	}
 	
+	int seq=0;
+	
 	public void init(Context context){
 		//get database to store in manager list
-		MyWayDBManager DBman;
+		
 		DBman = MyWayDBManager.getInstance(context);
 		Cursor c = DBman.searchWeekSchedule();
 		while(c.moveToNext()){
@@ -39,8 +41,16 @@ public class WeeklyManager {
 			int time = c.getInt(3);
 			int transport = c.getInt(4);
 			int from = c.getInt(5);
-			int to = c.getInt(6);
-			getInstance().addItem(id, name, dayofweek, time, transport, from, to);
+			String fromName = c.getString(6);
+			String fromAddress = c.getString(7);
+			float fromX = c.getFloat(8);
+			float fromY = c.getFloat(9);
+			int to = c.getInt(10);
+			String toName = c.getString(11);
+			String toAddress = c.getString(12);
+			float toX = c.getFloat(13);
+			float toY = c.getFloat(14);
+			getInstance().addItem(id, name, dayofweek, time, transport, from, fromName, fromAddress, fromX, fromY, to, toName, toAddress, toX, toY);
 		}
 	}
 	
@@ -50,7 +60,8 @@ public class WeeklyManager {
 		return wlist;
 	}
 	
-	public void addItem(int id, String name, int dayofweek, int time, int transport, int from, int to){
+	public void addItem(int id, String name, int dayofweek, int time, int transport,  int from, String fromName, String fromAddress, float fromx, float fromy
+			, int to, String toName, String toAddress, float tox, float toy){
 		WeeklyItem item = null;
 		item = new WeeklyItem();
 		item.setId(id);
@@ -59,9 +70,47 @@ public class WeeklyManager {
 		item.setTime(time);
 		item.setTransport(transport);
 		item.setFrom(from);
+		item.setFromName(fromName);
+		item.setFromAddress(fromAddress);
+		item.setFromX(fromx);
+		item.setFromY(fromy);
 		item.setTo(to);
+		item.setFromName(toName);
+		item.setFromAddress(toAddress);
+		item.setFromX(tox);
+		item.setFromY(toy);		
+		
 		wlist.add(item);
+		
+		if(id > seq) seq=id;
 	}
+	
+	public void addItem(String name, int dayofweek, int time, int transport,  int from, String fromName, String fromAddress, float fromx, float fromy
+			, int to, String toName, String toAddress, float tox, float toy){
+		WeeklyItem item = null;
+		item = new WeeklyItem();
+		seq++;
+		item.setId(seq);
+		item.setDayofweek(dayofweek);
+		item.setName(name);
+		item.setTime(time);
+		item.setTransport(transport);
+		item.setFrom(from);
+		item.setFromName(fromName);
+		item.setFromAddress(fromAddress);
+		item.setFromX(fromx);
+		item.setFromY(fromy);
+		item.setTo(to);
+		item.setFromName(toName);
+		item.setFromAddress(toAddress);
+		item.setFromX(tox);
+		item.setFromY(toy);		
+		
+		wlist.add(item);
+		
+		DBman.insertWeekSchedule(name, dayofweek, time, transport, from, fromName, fromAddress, fromx, fromy, to, toName, toAddress, tox, toy);
+	}
+	
 	
 	public void updateItem(int id, String name, int dayofweek, int time, int transport, int from, int to){
 		for(WeeklyItem w : wlist){
