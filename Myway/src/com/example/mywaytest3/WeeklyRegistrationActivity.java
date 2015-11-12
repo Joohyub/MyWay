@@ -1,13 +1,16 @@
 package com.example.mywaytest3;
 
+import com.example.mywaytest3.model.LocationManager;
 import com.github.jjobes.slidedaytimepicker.SlideDayTimeListener;
 import com.github.jjobes.slidedaytimepicker.SlideDayTimePicker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,7 +62,9 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
     	tvWeekDay.setText(sDay[day]);
     	tvWeekTime.setText(String.format("%s %02d:%02d", (hour >=12)?"오후":"오전", (hour > 12)?hour-12:hour, minute));
 				
-		
+    	
+    	LocationManager.locComm[1][0].setId(-2);
+    	LocationManager.locComm[1][1].setId(-3);
 		 final SlideDayTimeListener listener = new SlideDayTimeListener() {
 
 	            @Override
@@ -110,7 +115,30 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
                 .show();
             }
         });
+        
+        layoutWeekFrom.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(WeeklyRegistrationActivity.this, PlaceSelectActivity.class);
+				i.putExtra("bDayorWeek", 1);
+				i.putExtra("bType", 0);
+				startActivity(i);
+			}
+		});
 
+        
+        layoutWeekTo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(WeeklyRegistrationActivity.this, PlaceSelectActivity.class);
+				i.putExtra("bDayorWeek", 1);
+				i.putExtra("bType", 1);
+				startActivity(i);
+			}
+		});
+        
 	}
 	
 	@Override
@@ -119,5 +147,33 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 	    onBackPressed();
 	    return true;
 	}
+	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_registration, menu);
+		return true;
+	}
+
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if(LocationManager.locComm[1][0].getId() == -2)
+			tvWeekFrom.setText("실시간 위치");
+		else if(LocationManager.locComm[1][0].getId() == -1)
+			tvWeekFrom.setText(LocationManager.locComm[1][0].getAddress());
+		else
+			tvWeekFrom.setText(LocationManager.getInstance().getLocationAddress(LocationManager.locComm[1][0].getId()));
+			
+		if(LocationManager.locComm[1][1].getId() == -3)
+			tvWeekTo.setText("");
+		else if(LocationManager.locComm[1][1].getId() == -1)
+			tvWeekTo.setText(LocationManager.locComm[1][1].getAddress());
+		else
+			tvWeekTo.setText(LocationManager.getInstance().getLocationAddress(LocationManager.locComm[1][0].getId()));
+	}
+	
+	
 	
 }

@@ -109,7 +109,10 @@ public class HomeFragment extends Fragment {
 		if (gps.isGetLocation()) {
 			double latitude = gps.getLatitude();
 			double longitude = gps.getLongitude();
-
+			
+			com.example.mywaytest3.model.LocationManager.locCurrent.setX((float) latitude);
+			com.example.mywaytest3.model.LocationManager.locCurrent.setY((float) longitude);
+			
 			Toast.makeText(getActivity(), "ÁÂÇ¥ : " + longitude + ", " + latitude, Toast.LENGTH_SHORT).show();
 			LatLng latLng = new LatLng(latitude, longitude);
 

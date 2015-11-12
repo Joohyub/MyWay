@@ -19,7 +19,8 @@ public class MyWayDBManager {
 		return instance;
 	}
 	
-	public void insertWeekSchedule(String name, int dayofweek, int time, int transport,  int from, int to)
+	public void insertWeekSchedule(String name, int dayofweek, int time, int transport,  int from, String fromName, String fromAdress, float fromx, float fromy
+			, int to, String toName, String toAdress, float tox, float toy)
 	{
 		ContentValues value = new ContentValues();
 		value.put("_name",name);
@@ -27,11 +28,20 @@ public class MyWayDBManager {
 		value.put("_time", time);
 		value.put("_transport", transport);
 		value.put("_from", from);
+		value.put("_fromName", fromName);
+		value.put("_fromAdress", fromAdress);
+		value.put("_fromX", fromx);
+		value.put("_fromY", fromy);
 		value.put("_to", to);
+		value.put("_toName", toName);
+		value.put("_toAdress", toAdress);
+		value.put("_toX", tox);
+		value.put("_toY", toy);
 		db.insert(MyWayDBHelper.DB_TABLE_WEEKLY, null, value);
 	}
 	
-	public void insertAppointment(String name,int date, int time, int transport, int from, int to)
+	public void insertAppointment(String name,int date, int time, int transport, int from, String fromName, String fromAdress, float fromx, float fromy
+			, int to, String toName, String toAdress, float tox, float toy)
 	{
 		ContentValues value = new ContentValues();
 		value.put("_name",name);
@@ -39,7 +49,15 @@ public class MyWayDBManager {
 		value.put("_time", time);
 		value.put("_transport", transport);
 		value.put("_from", from);
+		value.put("_fromName", fromName);
+		value.put("_fromAdress", fromAdress);
+		value.put("_fromX", fromx);
+		value.put("_fromY", fromy);
 		value.put("_to", to);
+		value.put("_toName", toName);
+		value.put("_toAdress", toAdress);
+		value.put("_toX", tox);
+		value.put("_toY", toy);
 		db.insert(MyWayDBHelper.DB_TABLE_APPOINTMENT, null, value);
 	}
 	

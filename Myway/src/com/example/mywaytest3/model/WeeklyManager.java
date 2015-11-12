@@ -44,6 +44,12 @@ public class WeeklyManager {
 		}
 	}
 	
+	
+	public ArrayList<WeeklyItem> getList()
+	{
+		return wlist;
+	}
+	
 	public void addItem(int id, String name, int dayofweek, int time, int transport, int from, int to){
 		WeeklyItem item = null;
 		item = new WeeklyItem();

@@ -3,14 +3,7 @@ package com.example.mywaytest3;
 
 import java.util.ArrayList;
 
-import com.example.mywaytest3.adapter.NavDrawerListAdapter;
-import com.example.mywaytest3.model.AppointmentManager;
-import com.example.mywaytest3.model.LocationManager;
-import com.example.mywaytest3.model.NavDrawerItem;
-import com.example.mywaytest3.model.WeeklyManager;
-
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
@@ -20,12 +13,17 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.mywaytest3.adapter.NavDrawerListAdapter;
+import com.example.mywaytest3.model.AppointmentManager;
+import com.example.mywaytest3.model.LocationManager;
+import com.example.mywaytest3.model.NavDrawerItem;
+import com.example.mywaytest3.model.WeeklyManager;
 
 public class MainActivity extends FragmentActivity {
 	public static DrawerLayout mDrawerLayout;
@@ -66,7 +64,7 @@ public class MainActivity extends FragmentActivity {
 
 		fragments[0] = new HomeFragment();
 		fragments[1] = new WeeklyFragment();
-		fragments[2] = new AppointmentFragment();
+		fragments[2] = new MonthByWeekFragment(System.currentTimeMillis(), false);
 		fragments[3] = new PersonalSettingFragment();
 		fragments[4] = new AccaountSettingFragment();
 

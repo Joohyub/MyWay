@@ -24,9 +24,9 @@ public class MyWayDBHelper extends SQLiteOpenHelper{
 		db.execSQL("CREATE TABLE "+ DB_TABLE_LOCATION + 
 				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _address TEXT, _x REAL, _y REAL, _outtime INT, _type INT);");
 		db.execSQL("CREATE TABLE "+ DB_TABLE_APPOINTMENT + 
-				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _date INT, _time INT, _transport INT, _from INT, _to INT);");
+				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _date INT, _time INT, _transport INT, _from INT, _fromName TEXT, _fromAdress TEXT, _fromX REAL, _fromY REAL, _to INT, _toName TEXT, _toAdress TEXT, _toX REAL, _toY REAL);");
 		db.execSQL("CREATE TABLE "+ DB_TABLE_WEEKLY + 
-				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _dayofweek INT, _time INT, _transport INT, _from INT, _to INT);");
+				" (_id INTEGER PRIMARY KEY AUTOINCREMENT, _name TEXT, _dayofweek INT, _time INT, _transport INT, _from INT, _fromName TEXT, _fromAdress TEXT, _fromX REAL, _fromY REAL, _to INT, _toName TEXT, _toAdress TEXT, _toX REAL, _toY REAL);");
 
 		/*TEST CODE*/
 		ContentValues cv = new ContentValues();

@@ -13,6 +13,13 @@ public class LocationManager {
 		private static LocationManager instance = new LocationManager();
 		private ArrayList<LocationItem> llist = new ArrayList<LocationItem>();	
 		
+		
+		public static LocationItem locCurrent = new LocationItem();
+		public static LocationItem locComm[][] = new LocationItem[2][]; //Place Select Activity와 통신용도
+		
+		
+		
+		
 		private LocationManager() {
 			super();
 		}
@@ -34,6 +41,16 @@ public class LocationManager {
 				int type = c.getInt(6);
 				instance.addItem(id, name, address, x, y, outtime, type);
 			}
+			locComm[0] = new LocationItem[2];
+			locComm[1] = new LocationItem[2];
+			
+			locComm[0][0] = new LocationItem();
+			locComm[0][1] = new LocationItem();
+			locComm[1][0] = new LocationItem();
+			locComm[1][1] = new LocationItem();
+			
+			locComm[0][0].setId(-2); //realtime position;
+			locComm[1][0].setId(-2); //realtime position;
 
 		}
 		
