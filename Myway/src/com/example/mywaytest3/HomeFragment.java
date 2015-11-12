@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Gravity;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
@@ -23,6 +26,8 @@ import com.example.mywaytest3.adapter.AppointmentListAdapter;
 import com.example.mywaytest3.googlemap.GpsInfo;
 import com.example.mywaytest3.model.AppointmentItem;
 import com.example.mywaytest3.model.AppointmentManager;
+import com.example.mywaytest3.model.LocationItem;
+import com.example.mywaytest3.model.LocationManager;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -90,12 +95,6 @@ public class HomeFragment extends Fragment {
 		
 		list = appointmentManager.getList();
 		
-		appointmentListAdapter = new AppointmentListAdapter(getActivity(), list);
-		lv.setAdapter(appointmentListAdapter);
-		appointmentListAdapter.notifyDataSetChanged();
-		setListViewHeightBasedOnChildren(lv);
-
-
 		//Gps
 		// BitmapDescriptorFactory 생성하기 위한 소스 
 		MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -113,7 +112,7 @@ public class HomeFragment extends Fragment {
 			com.example.mywaytest3.model.LocationManager.locCurrent.setX((float) latitude);
 			com.example.mywaytest3.model.LocationManager.locCurrent.setY((float) longitude);
 			
-			Toast.makeText(getActivity(), "좌표 : " + longitude + ", " + latitude, Toast.LENGTH_SHORT).show();
+
 			LatLng latLng = new LatLng(latitude, longitude);
 
 			mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -125,7 +124,6 @@ public class HomeFragment extends Fragment {
 			optFirst.title("현재 위치");
 			mMap.addMarker(optFirst).showInfoWindow();
 		}
-
 	}
 	
 	 public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -159,6 +157,24 @@ public class HomeFragment extends Fragment {
 		lv.setAdapter(appointmentListAdapter);
 		appointmentListAdapter.notifyDataSetChanged();
 		setListViewHeightBasedOnChildren(lv);
+		
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				AppointmentItem l = list.get(position);
+				Intent i = new Intent(getActivity(), RouteActivity.class);
+				
+								
+				i.putExtra("olat", (l.getFrom() == -2)?LocationManager.locCurrent.getX():l.getFromX());
+				i.putExtra("olng", (l.getFrom() == -2)?LocationManager.locCurrent.getY():l.getFromY());
+				i.putExtra("dlat", l.getToX());
+				i.putExtra("dlng", l.getToY());
+				
+				startActivity(i);
+			}
+		});
 	}
 	
 }

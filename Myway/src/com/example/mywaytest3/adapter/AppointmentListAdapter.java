@@ -56,10 +56,11 @@ public class AppointmentListAdapter extends BaseAdapter {
         TextView itemtvTakingTime = (TextView) convertView.findViewById(R.id.itemtvTakingTime);
         
         itemtvName.setText(appointmentItems.get(position).getName());
-        itemtvLocation.setText(lm.getLocationAddress(appointmentItems.get(position).getTo()));
-        itemtvDateTime.setText(appointmentItems.get(position).getDate()/10000 + "/" + (appointmentItems.get(position).getDate()/100)%100 + "/" + appointmentItems.get(position).getDate()%100 + " " + appointmentItems.get(position).getTime()/100 + ":" + appointmentItems.get(position).getTime()%100);
-        itemtvTakingTime.setText("예상 소요시간 : " + appointmentItems.get(position).getEstimatedTime() + "분");
-        
+        itemtvLocation.setText(appointmentItems.get(position).getToAddress());
+        itemtvDateTime.setText(appointmentItems.get(position).getDate()/10000 + "/" + (appointmentItems.get(position).getDate()/100)%100 + "/" + appointmentItems.get(position).getDate()%100 + " " + String.format("%02d:%02d", appointmentItems.get(position).getTime()/100, appointmentItems.get(position).getTime()%100));
+       // itemtvTakingTime.setText("예상 소요시간 : " + appointmentItems.get(position).getEstimatedTime() + "분");
+        itemtvTakingTime.setText("");
+
      
         return convertView;
 	}

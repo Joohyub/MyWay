@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 
 import com.example.mywaytest3.adapter.NavDrawerListAdapter;
 import com.example.mywaytest3.model.AppointmentManager;
+import com.example.mywaytest3.model.CalendarController;
 import com.example.mywaytest3.model.CalendarController.EventHandler;
 import com.example.mywaytest3.model.CalendarController.EventInfo;
 import com.example.mywaytest3.model.CalendarController.EventType;
@@ -59,7 +61,7 @@ public class MainActivity extends FragmentActivity implements EventHandler{
 	boolean eventView;
 
 
-
+	private CalendarController mController;
 
 	public static Fragment fragments[] = new Fragment[5];
 	public static Fragment fragmentDay;
@@ -74,7 +76,7 @@ public class MainActivity extends FragmentActivity implements EventHandler{
 		fragments[2] = new MonthByWeekFragment(System.currentTimeMillis(), false);
 		fragments[3] = new PersonalSettingFragment();
 		fragments[4] = new AccaountSettingFragment();
-
+		fragmentDay = new DayFragment();
 
 		appointmentManager.init(this);
 		weeklyManager.init(this);
@@ -143,6 +145,11 @@ public class MainActivity extends FragmentActivity implements EventHandler{
 			// on first time display view for first nav item
 			displayView(0);
 		}
+		
+		mController = CalendarController.getInstance(this);
+        mController.registerEventHandler(R.id.cal_frame, (EventHandler) fragments[2]);
+        
+        mController.registerFirstEventHandler(0, this);
 	}
 
 	/**
@@ -187,45 +194,6 @@ public class MainActivity extends FragmentActivity implements EventHandler{
 	}
 
 	private void displayView(int position) {
-		
-		// update the main content by replacing fragments
-//		Fragment fragment = null;
-//		switch (position) {
-//		case 0:
-//			fragment = new HomeFragment();
-//			break;
-//		case 1:
-//			fragment = new WeeklyFragment();
-//			break;
-//		case 2:
-//			fragment = new AppointmentFragment();
-//			break;
-//		case 3:
-//			fragment = new PersonalSettingFragment();
-//			break;
-//		case 4:
-//			fragment = new AccaountSettingFragment();
-//			break;
-//
-//
-//		default:
-//			break;
-//		}
-//
-//		if (fragment != null) {
-//			FragmentManager fragmentManager = getFragmentManager();
-//			fragmentManager.beginTransaction()
-//			.replace(R.id.frame_container, fragment).commit();
-//
-//			// update selected item and title, then close the drawer
-//			mDrawerList.setItemChecked(position, true);
-//			mDrawerList.setSelection(position);
-//			setTitle(navMenuTitles[position]);
-//			mDrawerLayout.closeDrawer(mDrawerList);
-//		} else {
-//			// error in creating fragment
-//			Log.e("MainActivity", "Error in creating fragment");
-//		}
 		
 		
 		FragmentManager fragmentManager = getFragmentManager();
@@ -275,10 +243,17 @@ public class MainActivity extends FragmentActivity implements EventHandler{
 	public void handleEvent(EventInfo event) {
 		if (event.eventType == EventType.GO_TO) {
 			this.event = event;
-			dayView = true;
-				FragmentTransaction ft = getFragmentManager().beginTransaction();
-				fragmentDay = new DayFragment(event.startTime.toMillis(true),1);
-				ft.replace(R.id.cal_frame, fragmentDay).addToBackStack(null).commit();
+//			dayView = true;
+//				FragmentTransaction ft = getFragmentManager().beginTransaction();
+//				fragmentDay = new DayFragment(event.startTime.toMillis(true),1);
+//				ft.replace(R.id.frame_container, fragmentDay).addToBackStack(null).commit();
+			
+			Intent i = new Intent(MainActivity.this, AppointmentRegistrationActivity.class);
+			i.putExtra("mils", event.startTime.toMillis(true));
+			
+			startActivity(i);
+				
+				
 		}if(event.eventType == EventType.VIEW_EVENT){
 			//TODO do something when an event is clicked
 					dayView = false;

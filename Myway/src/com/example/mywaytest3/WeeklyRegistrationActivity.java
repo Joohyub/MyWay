@@ -1,5 +1,8 @@
 package com.example.mywaytest3;
 
+import com.example.mywaytest3.alarm.AlarmDBHelper;
+import com.example.mywaytest3.alarm.AlarmManagerHelper;
+import com.example.mywaytest3.alarm.AlarmModel;
 import com.example.mywaytest3.model.LocationItem;
 import com.example.mywaytest3.model.LocationManager;
 import com.example.mywaytest3.model.WeeklyManager;
@@ -25,7 +28,8 @@ import android.widget.Toast;
 
 public class WeeklyRegistrationActivity extends FragmentActivity{
 	
-	
+	private AlarmDBHelper dbHelper = new AlarmDBHelper(this);
+	private AlarmModel alarmDetails;
 	
 	LinearLayout layoutWeekDay, layoutWeekTime, layoutWeekFrom, layoutWeekTo, layoutWeekTransport;
 	
@@ -54,6 +58,8 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 		getActionBar().setTitle("새 주간일정 등록");
 		//getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		alarmDetails = new AlarmModel();
 		
 		day = getIntent().getExtras().getInt("day", 0);
 		hour = getIntent().getExtras().getInt("hour", 0);
@@ -197,6 +203,12 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 					,l0.getId(),l0.getName(), l0.getAddress(), l0.getX(), l0.getY()
 					,l1.getId(),l1.getName(), l1.getAddress(), l1.getX(), l1.getY());
 			Toast.makeText(WeeklyRegistrationActivity.this, "저장되었습니다", Toast.LENGTH_SHORT).show();
+			updateModelFromLayout();
+			
+			AlarmManagerHelper.cancelAlarms(this);
+			dbHelper.createAlarm(alarmDetails);
+			
+			AlarmManagerHelper.setAlarms(this);
 		}
 		
 	    onBackPressed();
@@ -238,6 +250,15 @@ public class WeeklyRegistrationActivity extends FragmentActivity{
 		}
 	}
 	
+	private void updateModelFromLayout() {		
+		alarmDetails.timeMinute = minute;
+		alarmDetails.timeHour = hour;
+		alarmDetails.name = LocationManager.locComm[1][1].getAddress();
+		alarmDetails.repeatWeekly = true;	
+		alarmDetails.setRepeatingDay((day+1)%7, true);	
+
+		alarmDetails.isEnabled = true;
+	}
 	
 	
 }

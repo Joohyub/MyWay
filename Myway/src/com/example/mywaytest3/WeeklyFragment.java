@@ -231,12 +231,7 @@ public class WeeklyFragment extends Fragment {
 		}
 
 		
-		ArrayList<WeeklyItem> wlist = weeklyManager.getList();
-		
-		for (WeeklyItem weeklyItem : wlist) {
-			tvCell[weeklyItem.getDayofweek()][weeklyItem.getTime()/100].setBackgroundResource(R.drawable.rounded_corner_week);
-			tvCell[weeklyItem.getDayofweek()][weeklyItem.getTime()/100].setText(String.format("%s\n%02d:%02d", weeklyItem.getName().substring(0, (weeklyItem.getName().length()<3)?weeklyItem.getName().length():3), weeklyItem.getTime()/100, weeklyItem.getTime()%100));
-		}
+
 
 		return rootView;
 	}
@@ -258,6 +253,17 @@ public class WeeklyFragment extends Fragment {
 
 			tvCell[day][hour].setBackgroundResource(R.drawable.rounded_corner_week);
 
+		}
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		ArrayList<WeeklyItem> wlist = weeklyManager.getList();
+		
+		for (WeeklyItem weeklyItem : wlist) {
+			tvCell[weeklyItem.getDayofweek()][weeklyItem.getTime()/100].setBackgroundResource(R.drawable.rounded_corner_week);
+			tvCell[weeklyItem.getDayofweek()][weeklyItem.getTime()/100].setText(String.format("%s\n%02d:%02d", weeklyItem.getName().substring(0, (weeklyItem.getName().length()<3)?weeklyItem.getName().length():3), weeklyItem.getTime()/100, weeklyItem.getTime()%100));
 		}
 	}
 

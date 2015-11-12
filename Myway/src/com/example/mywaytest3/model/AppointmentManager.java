@@ -14,6 +14,8 @@ import android.util.Log;
 public class AppointmentManager {
 	private static AppointmentManager instance = new AppointmentManager();
 	private ArrayList<AppointmentItem> aplist = new ArrayList<AppointmentItem>();	
+	MyWayDBManager DBman;
+	static int seq = 0;
 
 	private AppointmentManager() {
 		super();
@@ -68,7 +70,7 @@ public class AppointmentManager {
 	}
 	
 	public void init(Context context){
-		MyWayDBManager DBman;
+		
 		DBman = MyWayDBManager.getInstance(context);
 		Cursor c = DBman.searchAppointment();
 		while(c.moveToNext()){
@@ -78,8 +80,16 @@ public class AppointmentManager {
 			int time = c.getInt(3);
 			int transport = c.getInt(4);
 			int from = c.getInt(5);
-			int to = c.getInt(6);
-			getInstance().addItem(id, name, date, time, transport, from, to);
+			String fromName = c.getString(6);
+			String fromAddress = c.getString(7);
+			float fromX = c.getFloat(8);
+			float fromY = c.getFloat(9);
+			int to = c.getInt(10);
+			String toName = c.getString(11);
+			String toAddress = c.getString(12);
+			float toX = c.getFloat(13);
+			float toY = c.getFloat(14);
+			getInstance().addItem(id, name, date, time, transport, from, fromName, fromAddress, fromX, fromY, to, toName, toAddress, toX, toY);
 		}
 	}
 	
@@ -88,7 +98,8 @@ public class AppointmentManager {
 		return aplist;
 	}
 	
-	public void addItem(int id, String name, int date, int time, int transport, int from, int to){
+	public void addItem(int id, String name, int date, int time, int transport,  int from, String fromName, String fromAddress, float fromx, float fromy
+			, int to, String toName, String toAddress, float tox, float toy){
 		AppointmentItem item = null;
 		item = new AppointmentItem();
 		item.setId(id);
@@ -97,11 +108,47 @@ public class AppointmentManager {
 		item.setTime(time);
 		item.setTransport(transport);
 		item.setFrom(from);
+		item.setFromName(fromName);
+		item.setFromAddress(fromAddress);
+		item.setFromX(fromx);
+		item.setFromY(fromy);
 		item.setTo(to);
+		item.setToName(toName);
+		item.setToAddress(toAddress);
+		item.setToX(tox);
+		item.setToY(toy);	
+		if(id > seq) seq = id;
 		aplist.add(item);
 	}
+	
+	public void addItem(String name, int date, int time, int transport,  int from, String fromName, String fromAddress, float fromx, float fromy
+			, int to, String toName, String toAddress, float tox, float toy){
+		AppointmentItem item = null;
+		item = new AppointmentItem();
+		seq++;
+		item.setId(seq);
+		item.setDate(date);
+		item.setName(name);
+		item.setTime(time);
+		item.setTransport(transport);
+		item.setFrom(from);
+		item.setFromName(fromName);
+		item.setFromAddress(fromAddress);
+		item.setFromX(fromx);
+		item.setFromY(fromy);
+		item.setTo(to);
+		item.setToName(toName);
+		item.setToAddress(toAddress);
+		item.setToX(tox);
+		item.setToY(toy);	
+		aplist.add(item);
+		
 
-	public void updateItem(int id, String name, int date, int time, int transport, int from, int to){
+		DBman.insertAppointment(name, date, time, transport, from, fromName, fromAddress, fromx, fromy, to, toName, toAddress, tox, toy);
+	}
+
+	public void updateItem(int id, String name, int date, int time, int transport,  int from, String fromName, String fromAddress, float fromx, float fromy
+			, int to, String toName, String toAddress, float tox, float toy){
 		for(AppointmentItem ap : aplist){
 			if(ap.getId() == id){
 				ap.setName(name);

@@ -75,10 +75,10 @@ public class WeeklyManager {
 		item.setFromX(fromx);
 		item.setFromY(fromy);
 		item.setTo(to);
-		item.setFromName(toName);
-		item.setFromAddress(toAddress);
-		item.setFromX(tox);
-		item.setFromY(toy);		
+		item.setToName(toName);
+		item.setToAddress(toAddress);
+		item.setToX(tox);
+		item.setToY(toy);		
 		
 		wlist.add(item);
 		
@@ -101,10 +101,10 @@ public class WeeklyManager {
 		item.setFromX(fromx);
 		item.setFromY(fromy);
 		item.setTo(to);
-		item.setFromName(toName);
-		item.setFromAddress(toAddress);
-		item.setFromX(tox);
-		item.setFromY(toy);		
+		item.setToName(toName);
+		item.setToAddress(toAddress);
+		item.setToX(tox);
+		item.setToY(toy);		
 		
 		wlist.add(item);
 		

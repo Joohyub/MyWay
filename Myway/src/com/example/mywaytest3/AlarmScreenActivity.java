@@ -80,6 +80,7 @@ public class AlarmScreenActivity extends Activity implements OnInitListener, Ani
 //		
 //		animFadeIn.setAnimationListener(this);
 //		 
+		getActionBar().hide();
 		
 		tTemp = (TextView) findViewById(R.id.textTemp);
 		tWeather = (TextView) findViewById(R.id.textWeather);
