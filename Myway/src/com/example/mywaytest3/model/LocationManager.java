@@ -49,8 +49,8 @@ public class LocationManager {
 			locComm[1][0] = new LocationItem();
 			locComm[1][1] = new LocationItem();
 			
-			locComm[0][0].setId(-2); //realtime position;
-			locComm[1][0].setId(-2); //realtime position;
+			locComm[0][0].setId(-2);
+			locComm[1][0].setId(-2);
 
 		}
 		
